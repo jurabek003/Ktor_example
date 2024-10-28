@@ -7,11 +7,18 @@ import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.get
+import io.ktor.client.request.post
+import io.ktor.client.request.setBody
+import io.ktor.client.statement.HttpResponse
+import io.ktor.http.ContentType
+import io.ktor.http.HttpStatusCode
 import io.ktor.http.URLBuilder
+import io.ktor.http.contentType
 import io.ktor.http.takeFrom
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import uz.turgunboyevjurabek.ktorexample.domain.madels.MyModelItem
+import uz.turgunboyevjurabek.ktorexample.domain.madels.MyPost
 import uz.turgunboyevjurabek.ktorexample.domain.madels.MyPostModel
 import javax.inject.Inject
 
@@ -40,6 +47,23 @@ class KtorApiClient @Inject constructor(private val httpClient: HttpClient) {
             println("Error fetching posts: ${e.message}")
             null
         }
+    }
+
+    suspend fun createPost(post:MyPost):MyPostModel?{
+
+           val response:HttpResponse = httpClient.post("https://jsonplaceholder.typicode.com/posts"){
+               contentType(ContentType.Application.Json)
+               setBody(post)
+           }
+
+
+        return if (response.status == HttpStatusCode.Created){
+            response.body<MyPostModel>()
+        }else{
+            null
+//            println("${response.call.body()}")
+        }
+
     }
 
 }
