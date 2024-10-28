@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.0"
 }
 
 android {
@@ -80,4 +81,6 @@ dependencies {
     // Logging uchun
     implementation("io.ktor:ktor-client-logging:2.3.0")
 
+
+    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0") // Versiyani Kotlin bilan mos ravishda qo'ying
 }

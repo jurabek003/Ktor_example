@@ -4,8 +4,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class MyModelItem(
-    val completed: Boolean,
-    val id: Int,
-    val title: String,
-    val userId: Int
+    val completed: Boolean?,
+    val id: Int?,
+    val title: String?,
+    val userId: Int?
 )

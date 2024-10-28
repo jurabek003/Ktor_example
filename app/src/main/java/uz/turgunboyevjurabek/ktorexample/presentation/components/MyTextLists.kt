@@ -10,19 +10,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import uz.turgunboyevjurabek.ktorexample.domain.madels.MyModel
 import uz.turgunboyevjurabek.ktorexample.domain.madels.MyModelItem
 
 @Composable
-fun MyTextLists(modifier: Modifier = Modifier, posts: MyModel) {
+fun MyTextLists(modifier: Modifier = Modifier, posts: List<MyModelItem>?) {
     LazyColumn(
         modifier = modifier
             .fillMaxWidth()
     ) {
-        items(posts.size) {
+        items(posts?.size ?: 0) {
             Spacer(modifier = modifier.height(10.dp))
             Text(
-                text = posts[it].title,
+                text = posts?.get(it)?.title.toString(),
                 fontSize = 20.sp,
                 modifier = modifier.padding(start = 10.dp)
             )
