@@ -12,22 +12,13 @@ import io.ktor.http.takeFrom
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import uz.turgunboyevjurabek.ktorexample.domain.madels.MyModelItem
+import uz.turgunboyevjurabek.ktorexample.domain.madels.MyPostModel
+import javax.inject.Inject
 
 
-class KtorApiClient {
-    private val httpClient = HttpClient(CIO) {
-        install(ContentNegotiation) {
-            json(Json {
-                prettyPrint = true
-                isLenient = true
-                ignoreUnknownKeys = true
-            })
-        }
-        install(Logging) {
-            level = LogLevel.ALL
-        }
-    }
-    suspend fun getPosts():List<MyModelItem>?{
+class KtorApiClient @Inject constructor(private val httpClient: HttpClient) {
+
+    suspend fun getTodos():List<MyModelItem>?{
 //        val url= URLBuilder().apply {
 //            takeFrom("https://jsonplaceholder.typicode.com/todos/1")
 //        }.build()
@@ -39,7 +30,16 @@ class KtorApiClient {
             println("Error fetching posts: ${e.message}")
             null
         }
-
-
     }
+
+    suspend fun getPosts():List<MyPostModel>?{
+        return try {
+            val url="https://jsonplaceholder.typicode.com/posts/"
+            httpClient.get(url).body()
+        }catch (e:Exception){
+            println("Error fetching posts: ${e.message}")
+            null
+        }
+    }
+
 }

@@ -2,6 +2,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("org.jetbrains.kotlin.plugin.serialization") version "1.9.0"
+    id ("com.google.dagger.hilt.android")
+    id ("com.google.devtools.ksp") version "1.9.0-1.0.13"
+
 }
 
 android {
@@ -77,10 +80,25 @@ dependencies {
     // Content Negotiation uchun
     implementation("io.ktor:ktor-client-content-negotiation:2.3.0")
     implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.0")
-
     // Logging uchun
     implementation("io.ktor:ktor-client-logging:2.3.0")
 
-
+    /**
+     * Serialization
+     */
     implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0") // Versiyani Kotlin bilan mos ravishda qo'ying
+
+    /**
+     * Dagger Hilt
+     */
+    implementation ("com.google.dagger:hilt-android:2.49")
+    ksp ("com.google.dagger:hilt-android-compiler:2.48")
+    implementation ("androidx.hilt:hilt-navigation-fragment:1.2.0")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+    
+    /**
+     * For Navigation
+     */
+    implementation ("androidx.navigation:navigation-compose:2.7.7")
+
 }
